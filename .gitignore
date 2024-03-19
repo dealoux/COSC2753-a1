@@ -1,0 +1,17 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+.git/
+
+.pyc
+__pycache__/
+.venv/
+.env
+.vscode/
+.tool-versions
+poetry.lock
+
+logs/
+application.yml
+package-lock.json
+dist/
+.lh
