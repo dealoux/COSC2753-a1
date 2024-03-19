@@ -10,7 +10,7 @@ from sklearn.compose import ColumnTransformer
 # paths
 train_path = './data/data_train.csv'
 test_path = './data/data_test.csv'
-predictions_path = './data/s4000577_predictions.csv'
+predictions_path = './data/s4000577_predictions_logistic_regression.csv'
 
 
 # Load data
