@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
@@ -10,7 +10,7 @@ from sklearn.compose import ColumnTransformer
 # paths
 train_path = './data/data_train.csv'
 test_path = './data/data_test.csv'
-predictions_path = './data/s4000577_predictions_logistic_regression.csv'
+predictions_path = './data/s4000577_predictions_random_forest.csv'
 
 # Load data
 train_df = pd.read_csv(train_path)
@@ -23,14 +23,14 @@ y_train = train_df['Status']
 # Preprocessing:
 # Impute missing values if there are any.
 # We will use median for imputation because it's robust to outliers.
-# Then scale the features since we'll use logistic regression.
+# Then scale the features since we're using ensemble methods which might benefit from feature scaling.
 preprocessor = ColumnTransformer(
-  transformers=[
-    ('num', make_pipeline(SimpleImputer(strategy='median'), StandardScaler()), x_train.columns)
-  ])
+    transformers=[
+        ('num', make_pipeline(SimpleImputer(strategy='median'), StandardScaler()), x_train.columns)
+    ])
 
 # Define the model pipeline
-pipeline = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+pipeline = make_pipeline(preprocessor, RandomForestClassifier(n_estimators=100, random_state=42))
 
 # Split the training data into a smaller training subset and a validation subset
 x_train_sub, x_val, y_train_sub, y_val = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
